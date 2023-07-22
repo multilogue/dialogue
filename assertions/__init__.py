@@ -6,8 +6,9 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 """
 
-import entities
+from .context import metacontext, presuppositions
 
-
-a = entities.Facilitator(instruction='this instruction')
-print('ok')
+__all__ = [
+    "metacontext",
+    "presuppositions"
+]
