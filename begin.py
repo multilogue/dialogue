@@ -45,6 +45,7 @@ response = openai.ChatCompletion.create(
     functions=functions,
     function_call="auto",  # auto is default
 )
+
 response_messages = list()
 for choice in response["choices"]:
     message = choice["message"]
@@ -54,7 +55,7 @@ for choice in response["choices"]:
     if message._previous['content'] == None:
         pass
     # dumps(response_message, indent=2)
-    if input('Keep this choice?') == 'y':
-        response_messages.append(response_message)
+    # if input('Keep this choice?') == 'y':
+    #     response_messages.append(response_message)
 
 print('ok')

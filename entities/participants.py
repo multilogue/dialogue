@@ -9,23 +9,41 @@ from typing import Any
 
 
 class Entity:
-    """ human or other entity, participating in the multilogue """
+    """ Human or other entity, participating in the multilogue """
     instruction:    str = ''
     functions:      str = ''
     python_code:    str = ''
     name:           str = ''
+    role:           str = ''
 
     def __init__(self, *args, **kwargs):
-        pass
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
+    def __call__(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+        return self
+
+    def __repr__(self, *args, **kwargs):
+        return f"""     Entity:
+            intruction - {self.instruction},
+            functions - {self.functions},
+            python_code - {self.python_code},
+            name - {self.name},
+            role - {self.role},
+            """
 
 
 class Facilitator(Entity):
     """ multilogue facilitator """
     utterance: str = ''
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
         self.utterance = "I know nothing."
-        super(Facilitator, self).__init__(*args, **kwargs)
+        super(Facilitator, self).__init__(**kwargs)
 
     def __call__(self, *args, **kwargs):
         ...
@@ -35,25 +53,57 @@ class Facilitator(Entity):
         pass
 
 
-def protagonist(thought: str) -> str:
-    def thesis(thought: str) -> str:
-        return ''
-    """Return what protagonist has to say about the given thought"""
-    utterance = thesis(thought)
-    return utterance
+class Protagonist(Entity):
+    """ multilogue protagonist """
+    thesis: str = ''
+    antithesis: str = ''
+    utterance: str = ''
+
+    def __init__(self, **kwargs):
+        kwargs['role'] = 'protagonist'
+        self.thesis = kwargs['thesis']
+        super(Protagonist, self).__init__(**kwargs)
+
+    def __call__(self, *args, **kwargs):
+        ...
+        return self.utterance
+
+    def __repr__(self):
+        pass
 
 
-def antagonist(thought: str) -> str:
-    def antithesis(thought: str) -> str:
-        return ''
-    """Return what antagonist has to say about the given thought"""
-    utterance = antithesis(thought)
-    return utterance
+class Antagonist(Entity):
+    """ multilogue antagonist """
+    thesis: str = ''
+    antithesis: str = ''
+    utterance: str = ''
+
+    def __init__(self, **kwargs):
+        kwargs['role'] = 'antagonist'
+        self.thesis = kwargs['thesis']
+        super(Antagonist, self).__init__(**kwargs)
+
+    def __call__(self, *args, **kwargs):
+        ...
+        return self.utterance
+
+    def __repr__(self):
+        pass
 
 
-def interlocutor(name: str, thoughts: str) -> str:
-    def response(thought: str) -> str:
-        return ''
-    """Return what interlocutor has to say about the given thought"""
-    utterance = response(thoughts)
-    return utterance
+class Interlocutor(Entity):
+    """ multilogue interlocutor """
+    opinion: str = ''
+    utterance: str = ''
+
+    def __init__(self, **kwargs):
+        kwargs['role'] = 'protagonist'
+        self.thesis = kwargs['thesis']
+        super(Interlocutor, self).__init__(**kwargs)
+
+    def __call__(self, *args, **kwargs):
+        ...
+        return self.utterance
+
+    def __repr__(self):
+        pass
