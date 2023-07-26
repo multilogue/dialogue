@@ -6,43 +6,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 """
 from typing import Any
+from multilectic import Position
+from multilogue import Entity
 
 
-class Entity:
-    """ Human or other entity, participating in the multilogue """
-    instruction:    str = ''
-    functions:      str = ''
-    python_code:    str = ''
-    name:           str = ''
-    role:           str = ''
-
-    def __init__(self, *args, **kwargs):
-        for key, value in kwargs.items():
-            setattr(self, key, value)
-
-    def __call__(self, **kwargs):
-        for key, value in kwargs.items():
-            setattr(self, key, value)
-        return self
-
-    def __repr__(self, *args, **kwargs):
-        return f"""     Entity:
-            intruction - {self.instruction},
-            functions - {self.functions},
-            python_code - {self.python_code},
-            name - {self.name},
-            role - {self.role},
-            """
-
-
-class Facilitator(Entity):
+class Facilitator(Entity, Position):
     """ multilogue facilitator """
     utterance: str = ''
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
-        self.utterance = "I know nothing."
+        self.utterance = "I am a facilitator"
         super(Facilitator, self).__init__(**kwargs)
 
     def __call__(self, *args, **kwargs):
@@ -50,7 +25,7 @@ class Facilitator(Entity):
         return self.utterance
 
     def __repr__(self):
-        pass
+        return f"{self.name}, {self.role}"
 
 
 class Protagonist(Entity):

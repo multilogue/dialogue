@@ -11,7 +11,14 @@ The properly named environment variables are loaded
 into the OpenAI library by its' __init__"""
 import openai
 from json import loads, dumps
+from participants import Facilitator
 
+kwa = {
+    'name': 'Alex',
+    'role': 'facilitator',
+}
+
+Alex = Facilitator(**kwa)
 
 statement = """What's the weather like in Chicago, IL?"""
 who = 'Alex'
@@ -52,10 +59,4 @@ for choice in response["choices"]:
     content = message.to_dict_recursive()
 
     print(dumps(content, indent=2))
-    if message._previous['content'] == None:
-        pass
-    # dumps(response_message, indent=2)
-    # if input('Keep this choice?') == 'y':
-    #     response_messages.append(response_message)
-
 print('ok')
