@@ -5,13 +5,27 @@
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 """
-from typing import Any
+from typing import List, Dict
 from multilectic import Position
 from multilogue import Entity
 
 
 class Facilitator(Entity, Position):
-    """ multilogue facilitator """
+    """ Multilogue facilitator
+
+        Entity.  # from multilogue
+            name: str
+            role: str  # role in the multilogue, not an API role
+            instructions: str
+            functions: str
+            python_code: str
+        Positions.  # from multilectic
+            thesis: str
+            antithesis: str
+            facts: List
+            presuppositions: List[str]
+            conversation: List[Dict]
+    """
     utterance: str = ''
 
     def __init__(self, **kwargs):
@@ -28,10 +42,9 @@ class Facilitator(Entity, Position):
         return f"{self.name}, {self.role}"
 
 
-class Protagonist(Entity):
+class Protagonist(Entity, Position):
     """ multilogue protagonist """
-    thesis: str = ''
-    antithesis: str = ''
+
     utterance: str = ''
 
     def __init__(self, **kwargs):
@@ -44,13 +57,12 @@ class Protagonist(Entity):
         return self.utterance
 
     def __repr__(self):
-        pass
+        return f"{self.name}, {self.role}"
 
 
-class Antagonist(Entity):
+class Antagonist(Entity, Position):
     """ multilogue antagonist """
-    thesis: str = ''
-    antithesis: str = ''
+
     utterance: str = ''
 
     def __init__(self, **kwargs):
@@ -63,16 +75,16 @@ class Antagonist(Entity):
         return self.utterance
 
     def __repr__(self):
-        pass
+        return f"{self.name}, {self.role}"
 
 
-class Interlocutor(Entity):
+class Interlocutor(Entity, Position):
     """ multilogue interlocutor """
-    opinion: str = ''
+
     utterance: str = ''
 
     def __init__(self, **kwargs):
-        kwargs['role'] = 'protagonist'
+        kwargs['role'] = 'interlocutor'
         self.thesis = kwargs['thesis']
         super(Interlocutor, self).__init__(**kwargs)
 
@@ -81,4 +93,4 @@ class Interlocutor(Entity):
         return self.utterance
 
     def __repr__(self):
-        pass
+        return f"{self.name}, {self.role}"

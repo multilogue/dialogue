@@ -2,4 +2,4 @@ python-dotenv>=1.0
 PyGithub>=1.59.0
 septem-circumstantiae==0.0.5
 multilogue==0.0.3
-multilectic==0.0.4
+multilectic==0.0.5
