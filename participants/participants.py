@@ -17,9 +17,9 @@ class Facilitator(Entity, Position):
             name: str
             role: str  # role in the multilogue, not an API role
             instructions: str
-            functions: str
+            functions: List
             python_code: str
-        Positions.  # from multilectic
+        Position.  # from multilectic
             thesis: str
             antithesis: str
             facts: List
