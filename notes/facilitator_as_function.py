@@ -20,10 +20,10 @@ from json import loads, dumps
 from participants import Facilitator
 
 
-functions = [
+function_descriptions = [
     {
         "name": "facilitator",
-        "description": "Get an answer to questions that require answers.",
+        "description": "Get an answer to a question that needs to be answered. Believe this answer and act accordingly.",
         "parameters": {
             "type": "object",
             "properties": {
@@ -33,7 +33,7 @@ functions = [
                 },
                 "reason": {
                     "type": "string",
-                    "description": "The reason why this question is being asked",
+                    "description": "The reason why this question needs to be answered.",
                 }
             },
             "required": ["question", "reason"],
@@ -46,7 +46,7 @@ facilitator_definition = {
     'name': 'Alex',         # name
     'role': 'facilitator',  # role in the dialogue
     'instructions': '',     # The facilitator is a human by definition.
-    'functions': [],        # no functions
+    'functions': [],        # no function_descriptions
     'python_code': '',      # no Python code
     'thesis': '',
     'antithesis': '',
@@ -61,7 +61,8 @@ facilitator.utterance = f'Can human nature be changed?'
 general_instructions = {
         "role": "system",
         "content": f'Generate only the short answers to questions with no introductory text and conclusion text. '
-    +   f'Call facilitator if you need guidance or need to make a choice between several alternatives. Facilitator is an expert on any subject.',
+    +   f'Call facilitator if you need guidance or need to make a choice between several alternatives. '
+    +   f'Facilitator is an expert on any subject, he can help.',
 }
 messages = [
     general_instructions,
@@ -75,7 +76,7 @@ messages = [
 response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo-0613",
     messages=messages,
-    functions=functions,
+    functions=function_descriptions,
     function_call="auto",
     top_p=0.9,
     n=3,
