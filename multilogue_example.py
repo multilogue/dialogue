@@ -14,5 +14,6 @@ messages = [
         "content": "Can human nature be changed?"
     }
 ]
-the_answer = chatgpt.answer(messages=messages)
+kwa = {'top_p': 0.1, 'n': 2, 'max_tokens': 100}
+the_answer = chatgpt.answer(messages=messages, **kwa)
 print('ok')

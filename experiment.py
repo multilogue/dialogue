@@ -8,6 +8,10 @@ LICENSE file in the root directory of this source tree.
 from typing import List, Dict
 
 
+a = {'key': 'value', 'key2': 'value2'}
+b = {'key3': 'value3', 'key21': 'value21'}
+c = a | b
+
 class Left(object):
     def __init__(self):
         super(Left, self).__init__()
