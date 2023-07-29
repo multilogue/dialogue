@@ -91,4 +91,5 @@ for num, choice in enumerate(response["choices"]):
     print(num, " --  ", dumps(content, indent=2))
     response_messages.append(message)
 
+
 print('API call ok')
