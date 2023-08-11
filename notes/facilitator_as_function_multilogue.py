@@ -6,29 +6,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 """
 
-from os.path import dirname
-import sys
-from dotenv import load_dotenv, find_dotenv
-sys.path.append(dirname(find_dotenv()))
-load_dotenv()
-"""OPENAI_API_KEY or OPENAI_API_KEY_PATH,
-OPENAI_ORGANIZATION can be set... or not.
-The properly named environment variables are loaded
-into the OpenAI library by its' __init__"""
-import openai
-from json import loads, dumps
-from participants import Facilitator
+import multilogue.utilities.chatgpt as chatgpt
+from multilogue.participants import Facilitator, Expert
 
 
 description_of_the_function = """
 Get an answer to a question of interest. Analyse whether it is trustworthy.
-Act according to the result of your assessment."""
+Take it into account or not according to the result of your assessment."""
 
 description_of_the_qestion = """
 This is a question to an entity mentioned in the name of the function.
 This entity might have participated in the previous conversation, then
 what have been said by this entity should be taken into account when 
-asking the question."""
+you will be asking the question."""
 
 description_of_the_purpose = """
 The reason why this question needs to be answered. For what
@@ -82,28 +72,22 @@ messages = [
     general_instructions,
     {
         "role": "user",
-        "name":f'{facilitator.name}',
-        "content": f'{facilitator.utterance}'
+        "name": "Alex",
+        "content": "Can human nature be changed?",
     }
 ]
 
-response = openai.ChatCompletion.create(
+responses = chatgpt.answer(
     model="gpt-3.5-turbo-0613",
     messages=messages,
     functions=function_descriptions,
     function_call="auto",
-    top_p=1.0,
+    temperature=0.5,
+    # top_p=1.0,
     n=3,
-    max_tokens=3000,
-    presence_penalty=2.0,
-    frequency_penalty=2.0
+    max_tokens=300,
+    # presence_penalty=2.0,
+    # frequency_penalty=2.0
 )
-response_messages = []
-for num, choice in enumerate(response["choices"]):
-    message = choice["message"]
-    content = message.to_dict_recursive()
-    print(num, " --  ", dumps(content, indent=2))
-    response_messages.append(message)
-
 
 print('API call ok')
